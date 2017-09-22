@@ -6,6 +6,7 @@ Data
    - DomainFiles Folder: Data in text file
   
 It take a bout 3.5~4.5 second.
+
 Computer:
    - Intel(R) Core(TM) i5-4200H CPU @ 2.80GHz
    - Ubuntu 16.4. 64 bits
