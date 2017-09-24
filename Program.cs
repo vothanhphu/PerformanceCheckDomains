@@ -9,12 +9,13 @@ namespace CheckDomains
 	{
 		static void Main(string[] args)
 		{
-
 			Console.WriteLine("Begin: " + DateTime.Now.ToString("HH:mm:ss fff"));
 			Stopwatch watch = new Stopwatch();
 			watch.Start();
 
 			var service = new DomainService();
+
+			// Run multiple CPU by Parallel. Per file will be processing by per CPU
 			Enumerable.Range(1, 12).AsParallel().ForAll((fileIndex) => service.UpdateDomains(fileIndex));
 
 			watch.Stop();

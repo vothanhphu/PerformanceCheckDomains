@@ -19,8 +19,8 @@ namespace CheckDomains.Service
 		{
 			foreach (var item in GroupbyDomains(ReadFiles(fileIndex)))
 			{
+				// Run per group asynchonize
 				Task.Run(() => UpdateExistsDomains(item));
-				//UpdateExistsDomains(item);
 			}
 		}
 
@@ -41,6 +41,7 @@ namespace CheckDomains.Service
 		{
 			try
 			{
+				// Must log IntersectionsDomains when add exists domains
 				Monitor.Enter(_object);
 
 				var existsdomains = domains.Where(x => (this.IntersectionsDomains.Contains(x) == false)).ToList();
@@ -66,7 +67,7 @@ namespace CheckDomains.Service
 		{
 			var domainGroup = new Dictionary<string, HashSet<string>>();
 
-			foreach (var item in domains.GroupBy(x => GetRefix(x)))
+			foreach (var item in domains.GroupBy(x => GetDomainRefix(x)))
 			{
 				domainGroup.Add(item.Key, new HashSet<string>(item));
 			}
@@ -74,7 +75,7 @@ namespace CheckDomains.Service
 			return domainGroup;
 		}
 
-		private string GetRefix(string domain)
+		private string GetDomainRefix(string domain)
 		{
 			return (domain.Length >= REFIX_LENGTH ? domain.Substring(0, REFIX_LENGTH) : domain);
 		}
